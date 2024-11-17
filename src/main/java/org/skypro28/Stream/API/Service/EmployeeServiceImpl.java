@@ -11,9 +11,9 @@ import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    Map<String, String> employeeMap;
+    Map<String, Employee> employeeMap;
 
-    public EmployeeServiceImpl(Map<String, String> employeeMap) {
+    public EmployeeServiceImpl(Map<String, Employee> employeeMap) {
         this.employeeMap = employeeMap;
     }
 
@@ -23,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (this.employeeMap.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException("Работник уже в списке");
         } else {
-            this.employeeMap.put(employee.getFullName(), String.valueOf(employee));
+            this.employeeMap.put(employee.getFullName(), Employee.valueOf(employee));
             return employee;
         }
     }
@@ -50,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Map<String, String> allEmployee() {
+    public Map<String, Employee> allEmployee() {
         return Collections.unmodifiableMap(this.employeeMap);
     }
 

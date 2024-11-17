@@ -1,7 +1,5 @@
 package org.skypro28.Stream.API.Employee;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-
 import java.util.Objects;
 
 public class Employee {
@@ -15,6 +13,10 @@ public class Employee {
         this.lastName = lastName;
         this.departmentId = departmentId;
         this.salary = salary;
+    }
+
+    public static Employee valueOf(Employee employee) {
+        return employee;
     }
 
     public String getLastName() {

@@ -42,7 +42,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public Map<String, String> allEmployee() {
+    public Map<String, Employee> allEmployee() {
         return this.service.allEmployee();
     }
 }

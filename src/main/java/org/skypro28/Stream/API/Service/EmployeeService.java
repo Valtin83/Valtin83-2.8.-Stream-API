@@ -14,7 +14,7 @@ public interface EmployeeService {
 
     Employee fine(String firstName, String lastName, int departmentId, double salary);
 
-    Map<String, String> allEmployee();
+    Map<String, Employee> allEmployee();
 
     Collection<Employee> findAll();
 }
