@@ -1,47 +1,64 @@
 package org.skypro28.Stream.API.Employee;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import io.micrometer.observation.transport.Propagator;
+
 import java.util.Objects;
 
 public class Employee {
-    private String firstName;
     private String lastName;
+    private String firstName;
+    private static int departmentId;
+    private static double salary;
 
-    public Employee(String firstName, String lastName) {
+    public Employee(String firstName, String lastName, int departmentId, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.departmentId = departmentId;
+        this.salary = salary;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    @JsonGetter
+    public static double getSalary() {
+        return salary;
     }
 
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
-    public String getKeyFullName() {
-        return this.firstName + " " + this.lastName;
+    public String getFirstName() {
+        return firstName;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee employee)) return false;
+        return departmentId == employee.departmentId && Double.compare(salary, employee.salary) == 0 && Objects.equals(lastName, employee.lastName) && Objects.equals(firstName, employee.firstName);
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(new Object[]{this.firstName, this.lastName});
+        return Objects.hash(lastName, firstName, departmentId, salary);
     }
 
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (obj != null && this.getClass() == obj.getClass()) {
-            Employee employee = (Employee)obj;
-            return Objects.equals(this.firstName, employee.firstName) && Objects.equals(this.lastName, employee.lastName);
-        } else {
-            return false;
-        }
-    }
-
+    @Override
     public String toString() {
-        return "Employee{firstName='" +
-                this.firstName + "', lastName='" +
-                this.lastName + "'}";
+        return "Employee{" +
+                "lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", departmentId=" + departmentId +
+                ", salary=" + salary +
+                '}';
+    }
+
+
+    public static Object getDepartment(Object o) {
+        return departmentId;
     }
 }
-
