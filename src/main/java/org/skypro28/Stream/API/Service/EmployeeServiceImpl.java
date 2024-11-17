@@ -1,50 +1,61 @@
 package org.skypro28.Stream.API.Service;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import org.skypro28.Stream.API.Employee.Employee;
 import org.skypro28.Stream.API.Exception.EmployeeAlreadyAddedException;
 import org.skypro28.Stream.API.Exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    public Map<String, String> employees = new HashMap();
+    Map<String, Employee> employeeMap;
 
-    public EmployeeServiceImpl() {
+    public EmployeeServiceImpl(Map<String, Employee> employeeMap) {
+        this.employeeMap = employeeMap;
     }
 
-    public Employee add(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        if (this.employees.containsKey(employee.getKeyFullName())) {
+    @Override
+    public Employee add(String firstName, String lastName, int department, double salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
+        if (this.employeeMap.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException("Работник уже в списке");
         } else {
-            this.employees.put(employee.getKeyFullName(), String.valueOf(employee));
+            this.employeeMap.put(employee.getFullName(), Employee.valueOf(employee));
             return employee;
         }
     }
 
-    public Employee remove(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        if (this.employees.containsKey(employee.getKeyFullName())) {
-            this.employees.remove(employee.getKeyFullName());
-            return employee;
-        } else {
-            throw new EmployeeNotFoundException("Работника нет в списке");
-        }
-    }
-
-    public Employee fine(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        if (this.employees.containsKey(employee.getKeyFullName())) {
+    @Override
+    public Employee remove(String firstName, String lastName, int department, double salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
+        if (this.employeeMap.containsKey(employee.getFullName())) {
+            this.employeeMap.remove(employee.getFullName());
             return employee;
         } else {
             throw new EmployeeNotFoundException("Работника нет в списке");
         }
     }
 
-    public Map<String, String> allEmployee() {
-        return Collections.unmodifiableMap(this.employees);
+    @Override
+    public Employee fine(String firstName, String lastName, int department, double salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
+        if (this.employeeMap.containsKey(employee.getFullName())) {
+            return employee;
+        } else {
+            throw new EmployeeNotFoundException("Работника нет в списке");
+        }
+    }
+
+    @Override
+    public Map<String, Employee> allEmployee() {
+        return Collections.unmodifiableMap(this.employeeMap);
+    }
+
+    @Override
+    public Collection<Employee> findAll() {
+        return employeeMap.values();
     }
 }
