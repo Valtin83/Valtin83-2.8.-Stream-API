@@ -1,6 +1,7 @@
 package org.skypro28.Stream.API.Service;
 
 import org.skypro28.Stream.API.Employee.Employee;
+import org.skypro28.Stream.API.Exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -24,14 +25,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         return employeeService.findAll().stream()
                 .filter(e -> e.getDepartmentId() == departmentId)
                 .min(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow();
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     public Employee searchMaxSalaryDepartment(int departmentId) {
         return employeeService.findAll().stream()
                 .filter(e -> e.getDepartmentId() == departmentId)
                 .max(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow();
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     public Collection<Employee> employeesDepartment(int departmentId) {
