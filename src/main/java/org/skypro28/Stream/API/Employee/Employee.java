@@ -1,15 +1,14 @@
 package org.skypro28.Stream.API.Employee;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import io.micrometer.observation.transport.Propagator;
 
 import java.util.Objects;
 
 public class Employee {
     private String lastName;
     private String firstName;
-    private static int departmentId;
-    private static double salary;
+    private int departmentId;
+    private double salary;
 
     public Employee(String firstName, String lastName, int departmentId, double salary) {
         this.firstName = firstName;
@@ -18,21 +17,40 @@ public class Employee {
         this.salary = salary;
     }
 
-    @JsonGetter
-    public static double getSalary() {
-        return salary;
-    }
-
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public String getFullName(){
+        return lastName + firstName;
     }
 
     @Override
@@ -58,7 +76,5 @@ public class Employee {
     }
 
 
-    public static Object getDepartment(Object o) {
-        return departmentId;
-    }
+
 }

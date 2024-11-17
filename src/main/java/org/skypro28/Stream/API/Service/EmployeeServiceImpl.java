@@ -4,12 +4,13 @@ import org.skypro28.Stream.API.Exception.EmployeeAlreadyAddedException;
 import org.skypro28.Stream.API.Exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
 
 @Service
-public abstract class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
     Map<String, String> employeeMap;
 
     public EmployeeServiceImpl(Map<String, String> employeeMap) {
@@ -51,5 +52,10 @@ public abstract class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Map<String, String> allEmployee() {
         return Collections.unmodifiableMap(this.employeeMap);
+    }
+
+    @Override
+    public Collection<Employee> findAll() {
+        return employeeMap.values();
     }
 }

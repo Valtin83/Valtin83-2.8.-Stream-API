@@ -16,5 +16,5 @@ public interface EmployeeService {
 
     Map<String, String> allEmployee();
 
-    Collection<Object> findAll();
+    Collection<Employee> findAll();
 }
